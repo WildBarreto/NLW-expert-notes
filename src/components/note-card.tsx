@@ -5,12 +5,14 @@ import { X } from "lucide-react";
 
 interface NoteCardProps {
   note: {
+    id: string;
     date: Date;
     content: string;
   };
+  onNoteDeleted: (id: string) => void;
 }
 
-export function NoteCard({ note }: NoteCardProps) {
+export function NoteCard({ note, onNoteDeleted }: NoteCardProps) {
   return (
     <Dialog.Root>
       {/*Componente principal para utilização do radix*/}
@@ -30,7 +32,7 @@ export function NoteCard({ note }: NoteCardProps) {
         {/*Faz com que um conteudo dentro dele não seja mostrado exatamente no mesmo local*/}
         <Dialog.Overlay className="inset-0 fixed bg-black/50" />
         {/*a dive escura que cobre a tela quando usa um modal */}
-        <Dialog.Content className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  max-w-[640px] w-full h-[60vh] bg-slate-700 rounded-md flex flex-col outline-none">
+        <Dialog.Content className="fixed overflow-hidden inset-0 md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2  md:max-w-[640px] w-full md:h-[60vh] bg-slate-700 md:rounded-md flex flex-col outline-none">
           {/*É o conteudo que vai aparecer no modal*/}
           <Dialog.Close className="absolute right-0 top-0 bg-slate-800 p-1.5 text-slate-400">
             <X className="size-5  hover:text-slate-100" />
@@ -48,6 +50,7 @@ export function NoteCard({ note }: NoteCardProps) {
           </div>
           <button
             type="button"
+            onClick={() => onNoteDeleted(note.id)}
             className="w-full bg-slate-800 py-4 text-center text-sm  text-slate-300 outline-none font-medium group"
           >
             Deseja{" "}
